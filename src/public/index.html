@@ -21,19 +21,40 @@
             <form>
                 <!-- Campo nombre del producto -->
                 <div class="form-group">
-                    <label for="title">Nombre</label>
-                    <input id="title" class="form-control" type="text" name="title"required>
+                    <label for="nombre">Nombre</label>
+                    <input id="nombre" class="form-control" type="text" name="nombre" required>
                 </div>
-                <!-- Campo precio del producto -->
+
+                <!-- Campo Descripcion del producto -->
                 <div class="form-group">
-                    <label for="price">Precio</label>
-                    <input id="price" class="form-control" type="number" step="0.5" name="price"required>
+                    <label for="descripcion">Descripcion</label>
+                    <input id="descripcion" class="form-control" type="text" name="descripcion" required>
                 </div>
-                <!-- Campo url de la foto del producto -->
+
+                <!-- Campo Codigo del producto -->
+                <div class="form-group">
+                    <label for="codigo">Codigo</label>
+                    <input id="codigo" class="form-control" type="text" name="codigo" required>
+                </div>
+
+                <!-- Campo Url de la foto del producto -->
                 <div class="form-group">
                     <label for="thumbnail">Foto URL</label>
                     <input id="thumbnail" class="form-control" type="url" name="thumbnail" required>
                 </div>
+
+                <!-- Campo precio del producto -->
+                <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input id="precio" class="form-control" type="number" step="0.5" name="precio" required>
+                </div>
+
+                <!-- Campo Stock del producto -->
+                <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input id="stock" class="form-control" type="number" step="0.5" name="stock" required>
+                </div>
+
                 <!-- Botón de envío -->
                 <button class="btn btn-success mt-3">Enviar</button>
             </form>
@@ -46,16 +67,16 @@
     <div class="container mt-3">
         <div class="jumbotron">
             <h1> Centro de Mensajes</h1>
-            <form class="form-inline" onsubmit="return addMessage(this)"> 
+            <form  id="centroMsj1" class="form-inline" onsubmit="return addMessage(this)"> 
                 <div class="form-group">
-                    <input id="email" type="text" class="form-control my-2 mr-2" placeholder="Ingrese un  email" required>
+                    <input id="email" class="form-control my-2 mr-2" type="url" name="email" placeholder="Ingrese un email" required>
                 </div>
             </form>
                 <div id='mensajes'></div>    
             
-            <form class="form-inline" onsubmit="return addMessage(this)"> 
+            <form id="centroMsj2" class="form-inline" onsubmit="return addMessage(this)"> 
                 <div class="form-group">
-                    <input id="msj" type="text" class="form-control my-2 mr-2" placeholder="Ingrese un mensaje . . . " required>
+                    <input id="msj" type="text" class="form-control my-2 mr-2" name="msj" placeholder="Ingrese un mensaje . . . " required>
                     <input class="btn btn-primary my-2" type="submit" value="Enviar" >
                 </div>
             </form>

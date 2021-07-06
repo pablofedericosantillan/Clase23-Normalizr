@@ -1,30 +1,23 @@
 {
-  "dependencies": {
-    "express": "^4.17.1",
-    "express-handlebars": "^5.3.2",
-    "socket.io": "^4.1.2"
-  },
-  "scripts": {
-    "start": "node server.js"
-  },
-  "name": "Clase13-WebsocketP2-SantillanPablo",
+  "name": "src",
   "version": "1.0.0",
+  "description": "",
   "main": "server.js",
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pablofedericosantillan/Clase-13---Websocket---Parte-2.git"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./src/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/pablofedericosantillan/Clase-13---Websocket---Parte-2.git"
-  }, 
-  "engines": { 
-    "node": "≥ 6.0.0",
-    "npm": "≥ 3.0.0"
-  },
-  "homepage": "https://github.com/pablofedericosantillan/Clase-13---Websocket---Parte-2.git",
-  "description": ""
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.2",
+    "handlebars": "^4.7.7",
+    "knex": "^0.95.6",
+    "moment": "^2.29.1",
+    "mysql": "^2.18.1",
+    "socket.io": "^4.1.2",
+    "sqlite3": "^5.0.2"
+  }
 }

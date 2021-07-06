@@ -9,6 +9,8 @@ socket.on('mensajes', data =>{
     render(data);
 });
 
+
+/* Funciones para Chats*/
 function render(data){
     let html=data.map(function(elem) {
         return (`
@@ -20,6 +22,8 @@ function render(data){
                 `)
     }).join(" ");
     document.getElementById('mensajes').innerHTML=html;
+    document.getElementById('centroMsj1',).reset();
+    document.getElementById('centroMsj2').reset();
 }
 
 
@@ -29,21 +33,25 @@ function addMessage(event){
         msj: document.getElementById('msj').value,
         fyh: `${moment().format("DD/MM/YYYY HH:mm:ss")}`
     };
+
     socket.emit('nuevo mensaje', msj)
     return false;
 }
 
 
 
-/* obtengo el formulario */
+/* Funciones para Tabla de productos*/
 const form = document.querySelector('form');
 
 form.addEventListener('submit', event => {
     event.preventDefault();
     const data = { 
-        title: document.getElementById('title').value, 
-        price: document.getElementById('price').value, 
-        thumbnail: document.getElementById('thumbnail').value 
+        nombre: document.getElementById('nombre').value,
+        descripcion: document.getElementById('descripcion').value,
+        codigo: document.getElementById('codigo').value,
+        thumbnail: document.getElementById('thumbnail').value,
+        precio: document.getElementById('precio').value,
+        stock: document.getElementById('stock').value 
     };
 
     fetch('/api/productos/guardar', {
@@ -82,8 +90,8 @@ function data2TableHBS(productos) {
                 </tr>
                 {{#each productos}}
                 <tr>
-                    <td>{{this.title}}</td>
-                    <td>$ {{ this.price }}</td>
+                    <td>{{this.nombre}}</td>
+                    <td>$ {{ this.precio }}</td>
                     <td><img width="50" src={{this.thumbnail}} alt="not found"></td>
                 </tr>
                 {{/each}}
