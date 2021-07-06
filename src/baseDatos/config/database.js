@@ -9,13 +9,5 @@ const mysql = {
     pool: { min: 0, max: 7 }
 }
 
-const sqlite3 = {
-    client: 'sqlite3',
-    connection: {
-        filename: __dirname + '/../db/mydb.sqlite'
-    },
-    useNullAsDefault: true
-}
-
 module.exports = mysql;
 

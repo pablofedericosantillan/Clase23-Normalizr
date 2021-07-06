@@ -1,27 +1,8 @@
-const options = require('./config/database');
+const options = require('./config/databaseSQLite');
 const knex = require('knex')(options);
 
 class BaseDatos {
     constructor() {
-    }
-
-    async crearTablaProductos() {
-        try {
-            await knex.schema.dropTableIfExists('productos');
-            await knex.schema.createTable('productos', table => {
-                table.increments('id').notNullable();
-                table.string('timestamp').notNullable();
-                table.string('nombre').notNullable();
-                table.string('descripcion').notNullable();
-                table.string('codigo').notNullable();
-                table.string('thumbnail');
-                table.float('precio');
-                table.float('stock');
-            });
-        }catch (error) {
-                console.log(error);
-        }
-        return false;
     }
 
     async crearTablaMensajes() {
