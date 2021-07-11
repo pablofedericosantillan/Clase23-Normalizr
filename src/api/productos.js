@@ -1,5 +1,5 @@
 const moment = require('moment');
-const baseDatos = require('../baseDatos/baseDatos');
+const baseDatosProductos = require('../baseDatos/baseDatosProductos');
 
 
 class Productos {
@@ -27,7 +27,7 @@ class Productos {
      async guardar(newProduct){
             try{
             newProduct.timestamp= `${moment().format("DD/MM/YYYY HH:mm:ss")}`;
-            await baseDatos.guardar(newProduct,'productos')
+            await baseDatosProductos.guardar(newProduct)
                 if(this.item.length === 0){
                     newProduct.id=1;
                      }else{
@@ -43,12 +43,18 @@ class Productos {
 
    async actualizar(id,newProduct){
             try{
-                newProduct.timestamp= `${moment().format("DD/MM/YYYY HH:mm:ss")}`;
-                await baseDatos.actualizar(id,newProduct,'productos');
-                newProduct.id = Number(id);
                 let index = this.item.findIndex(p => p.id == id);
+                if(index != -1){
+                newProduct.timestamp= `${moment().format("DD/MM/YYYY HH:mm:ss")}`;
+                await baseDatosProductos.actualizar(await baseDatosProductos.buscarId(this.buscarPorId(id)),newProduct);
+
+                newProduct.id = Number(id);
+
                 this.item.splice(index, 1, newProduct);
                 return newProduct;
+            }else{
+                return {error: "producto no encontrado para Actualizar" }
+                }
             }catch(err){
                 console.log('Error en la funcion actualizar', err); 
             }
@@ -56,10 +62,11 @@ class Productos {
     
     async borrar(id){         
             try{
-                if(id <= this.item.length){
-                    let index = this.item.findIndex(p => p.id == id);
+                let index = this.item.findIndex(p => p.id == id);
+                if(index != -1){
+                    await baseDatosProductos.borrar(await baseDatosProductos.buscarId(this.buscarPorId(id)))
+
                     this.item.splice(index, 1)
-                    await baseDatos.borrar(id,'productos')
                     return 'Proceso de borrado exitoso!';
                 }else{
                 return {error: "producto no encontrado para Borrar" }

@@ -10,10 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 /* -------------------- Base de Datos ---------------------- */
-const baseDatos = require('./baseDatos/baseDatos');
-const baseDatosSQLite = require('./baseDatos/baseDatosSQLite');
-baseDatos.crearTablaProductos();
-baseDatosSQLite.crearTablaMensajes();
+const baseDatosMensajes = require('./baseDatos/baseDatosMensajes');
 
 /* -------------------- HTTP endpoints ---------------------- */
 const productosRouter = require('./routes/productos');
@@ -36,7 +33,7 @@ io.on('connection', socket => {
     /* Socket para chat */
     socket.emit('mensajes', mensajes);
     socket.on('nuevo mensaje', async msj=>{
-        await baseDatosSQLite.guardar(msj,'mensajes')
+        await baseDatosMensajes.guardar(msj)
         mensajes.push(msj)
         await io.sockets.emit('mensajes', mensajes)
     })

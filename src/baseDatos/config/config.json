@@ -1,0 +1,4 @@
+{
+    "MONGO_URL_PRODUCTOS": "mongodb://localhost:27017/productos",
+    "MONGO_URL_MENSAJES": "mongodb://localhost:27017/mensajes"
+}
