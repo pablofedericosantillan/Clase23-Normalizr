@@ -10,6 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 /* -------------------- Base de Datos ---------------------- */
+require('./baseDatos/models/coneccion');
 const baseDatosMensajes = require('./baseDatos/baseDatosMensajes');
 
 /* -------------------- HTTP endpoints ---------------------- */
@@ -36,6 +37,7 @@ io.on('connection', socket => {
         await baseDatosMensajes.guardar(msj)
         mensajes.push(msj)
         await io.sockets.emit('mensajes', mensajes)
+        //console.log(await baseDatosMensajes.leer(msj))
     })
 });
 
