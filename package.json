@@ -16,6 +16,7 @@
     "handlebars": "^4.7.7",
     "moment": "^2.29.1",
     "mongoose": "^5.12.12",
+    "normalizr": "^3.6.1",
     "socket.io": "^4.1.2"
   }
 }

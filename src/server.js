@@ -18,9 +18,7 @@ const productosRouter = require('./routes/productos');
 app.use('/api', productosRouter);
 
 /* -------------------- Web Sockets ---------------------- */
-const mensajes = [
-    { email: '', msj: '', fyh: '' },
-];
+const mensajes = [];
 
 io.on('connection', socket => {
     console.log('Welcome!');
@@ -35,9 +33,9 @@ io.on('connection', socket => {
     socket.emit('mensajes', mensajes);
     socket.on('nuevo mensaje', async msj=>{
         await baseDatosMensajes.guardar(msj)
-        mensajes.push(msj)
-        await io.sockets.emit('mensajes', mensajes)
-        //console.log(await baseDatosMensajes.leer(msj))
+        let msjs = await baseDatosMensajes.leer();
+        //console.log('norm', JSON.stringify(msjs, null, 3));
+        await io.sockets.emit('mensajes', msjs)
     })
 });
 

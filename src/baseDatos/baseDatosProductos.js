@@ -2,6 +2,9 @@ const productos = require('./models/productos');
 
 class BaseDatosProductos {
     constructor() {
+        (async() => {
+            await productos.deleteMany({});
+        })()
     }
     async listar(){
         try{

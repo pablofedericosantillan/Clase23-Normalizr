@@ -1,3 +1,21 @@
+const schema= normalizr.schema;
+const denormalize= normalizr.denormalize;
+
+const schemaAuthor = new schema.Entity('author',{},{idAttribute: 'email'});
+
+// Definimos un esquema de mensaje
+const schemaMensaje = new schema.Entity('post', {
+    author: schemaAuthor
+},{idAttribute: '_id'})
+
+// Definimos un esquema de posts
+const schemaMensajes = new schema.Entity('posts', {
+  msj: [schemaMensaje]
+},{idAttribute: 'id'})
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+
 const socket = io.connect();
 
 /* si recibo productos, los muestro usando handlebars */
@@ -6,21 +24,38 @@ socket.on('productos', function (productos) {
 });
 
 socket.on('mensajes', data =>{ 
-    render(data);
+    if(data.length != 0){
+        let denormalizedData = denormalize(data.result, schemaMensajes, data.entities);
+        //console.log('\n desnorm', JSON.stringify(denormalizedData, null, 3));
+
+        //Calculo de %COMPRENSION 
+        //console.log('normalizado',JSON.stringify(data).length)
+        //console.log('desnormalizado',JSON.stringify(denormalizedData).length)
+        let comprension=(JSON.stringify(data).length/JSON.stringify(denormalizedData).length - 1)*100;
+        console.log('comprension',comprension)
+        const plantilla = `<h2 class="form-group"> (Comprensión: ${parseInt(comprension)} %) </h2>`
+        document.getElementById('comprension').innerHTML = plantilla;
+
+        render(denormalizedData.msj);
+    }else{
+        render([]);
+    }
 });
 
 
 /* Funciones para Chats*/
-function render(data){
+function render(data,comprension){
     let html=data.map(function(elem) {
-        return (`
-                <div class="form-group">
-                <strong style="color:blue;">${elem.email} </strong>
-                <em style="color:brown;">${elem.fyh} </em>
-                <em style="color:green;">${elem.msj} </em>
-                </div>
-                `)
-    }).join(" ");
+    return (`
+    <div class="form-group">
+    <strong style="color:blue;">${elem.author.email} </strong>
+    <em style="color:brown;">${elem.fyh} </em>
+    <em style="color:green;">${elem.text} </em>
+     <img width="50" src=${elem.author.avatar}></img>
+    </div>
+    `)
+    }).join(" "); 
+
     document.getElementById('mensajes').innerHTML=html;
     document.getElementById('centroMsj1',).reset();
     document.getElementById('centroMsj2').reset();
@@ -28,10 +63,19 @@ function render(data){
 
 
 function addMessage(event){
+  
     let msj={
-        email: document.getElementById('email').value,
-        msj: document.getElementById('msj').value,
-        fyh: `${moment().format("DD/MM/YYYY HH:mm:ss")}`
+        author:{
+            email: document.getElementById('email').value,
+            name: document.getElementById('name').value,
+            apellido: document.getElementById('apellido').value,
+            edad: document.getElementById('edad').value,
+            alias: document.getElementById('alias').value,
+            avatar: document.getElementById('avatar').value
+
+            },
+        fyh: `${moment().format("DD/MM/YYYY HH:mm:ss")}`,
+        text: document.getElementById('text').value
     };
 
     socket.emit('nuevo mensaje', msj)
